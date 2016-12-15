@@ -21,7 +21,12 @@ generatedSuggestedset.generatedSuggestedset = function (dataset, selectedAttribu
 				var pair = [];
 				pair.push(dataset[i]);
 				pair.push(dataset[j]);
+				// x,y reverse
+				var pair_reverse = [];
+				pair.pair_reverse.push(dataset[j]);
+				pair.pair_reverse.push(dataset[i]);
 				result.push(pair);
+				result.push(pair_reverse);
 			}
 		}
 	}
