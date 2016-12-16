@@ -1,4 +1,4 @@
-var generatedSuggestedset = {};
+var generatedChannel = {};
 
 /**
  * [generatedSuggestedset description]
@@ -6,9 +6,10 @@ var generatedSuggestedset = {};
  * @param  {[type]} selectedAttribute [description]
  * @return {[type]}                   [description]
  */
-generatedSuggestedset.generatedSuggestedset = function (dataset, selectedAttribute) {
+generatedChannel.generatedChannel = function (dataset, selectedAttribute) {
 	/**
-	 * result [["name", "year"], ["name", "cylinder"], ["year", "cylinder"]]
+	 * result [{"measure": "name", "dimension": "year"},{"measure": "name", "dimension": "cylinder"}]
+	 * 
 	 * @type {Array}
 	 */
 	var result = [];
@@ -18,15 +19,18 @@ generatedSuggestedset.generatedSuggestedset = function (dataset, selectedAttribu
 	} else {
 		for (var i = 0; i < dataset.length(); i++) {
 			for (var j = i + 1; j < dataset.length(); j++) {
-				var pair = [];
-				pair.push(dataset[i]);
-				pair.push(dataset[j]);
-				// x,y reverse
-				var pair_reverse = [];
-				pair.pair_reverse.push(dataset[j]);
-				pair.pair_reverse.push(dataset[i]);
+				var pair = {
+					'measure': '',
+					'dimension': ''
+				};
+				pair['measure'] = dataset[i];
+				pair['dimension'] = dataset[j];
 				result.push(pair);
-				result.push(pair_reverse);
+
+				// reverse
+				pair['measure'] = dataset[j];
+				pair['dimension'] = dataset[i];
+				result.push(pair);
 			}
 		}
 	}
@@ -35,4 +39,4 @@ generatedSuggestedset.generatedSuggestedset = function (dataset, selectedAttribu
 };
 
 
-module.exports = generatedSuggestedset;
+module.exports = generatedChannel;

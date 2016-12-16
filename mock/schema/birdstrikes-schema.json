@@ -1,72 +1,62 @@
 [{
   "key": "OPERATOR",
-  "field_name": "Aircraft: Airline/Operator",
+  "field_name": "Aircraft__Airline_Operator",
   "enabled": true,
-  "data_type": "categorical"
+  "data_type": "N"
 }, {
   "key": "ATYPE",
-  "field_name": "Aircraft: Make/Model",
+  "field_name": "Aircraft__Make_Model",
   "data_type": "categorical"
 }, {
   "key": "AIRPORT",
-  "field_name": "Airport: Name",
-  "data_type": "categorical"
+  "field_name": "Airport__Name",
+  "data_type": "N"
 }, {
   "key": "Effect_Amount of damage",
-  "field_name": "Effect: Amount of damage",
-  "data_type": "categorical"
+  "field_name": "Effect__Amount_of_damage",
+  "data_type": "N"
 }, {
   "key": "INCIDENT_DATE",
-  "field_name": "Flight Date",
-  "data_type": "datetime"
-}, {
-  "key": "FAAREGION",
-  "field_name": "Location: FAA Region",
-  "data_type": "categorical",
-  "disabled": true
+  "field_name": "Flight_Date",
+  "data_type": "T"
 }, {
   "key": "Origin_State_Code_(copy)",
-  "field_name": "Origin State",
-  "data_type": "geographic"
+  "field_name": "Origin_State",
+  "data_type": "N"
 }, {
   "key": "PHASE_OF_FLT",
-  "field_name": "When: Phase of flight",
-  "data_type": "categorical"
+  "field_name": "When__Phase_of_flight",
+  "data_type": "N"
 }, {
   "key": "TIME_OF_DAY",
-  "field_name": "When: Time of day",
-  "data_type": "categorical"
+  "field_name": "When__Time_of_day",
+  "data_type": "N"
 }, {
   "key": "SIZE",
-  "field_name": "Wildlife: Size",
-  "data_type": "categorical"
+  "field_name": "Wildlife__Size",
+  "data_type": "N"
 }, {
   "key": "SPECIES",
-  "field_name": "Wildlife: Species",
-  "data_type": "categorical"
-}, {
-  "key": "AOS",
-  "field_name": "Cost: Aircraft time out of Service",
-  "disabled": true,
-  "data_type": "quantitative"
+  "field_name": "Wildlife__Species",
+  "data_type": "N"
 }, {
   "key": "Cost_Other_inflation adj",
-  "field_name": "Cost: Other",
-  "data_type": "quantitative"
+  "field_name": "Cost__Other",
+  "data_type": "Q"
 }, {
   "key": "Cost__Repairs_(adj)",
-  "field_name": "Cost: Repair",
-  "data_type": "quantitative"
+  "field_name": "Cost__Repair",
+  "data_type": "Q"
 }, {
   "key": "Cost__Total_$",
-  "field_name": "Cost: Total $",
-  "data_type": "quantitative"
+  "field_name": "Cost__Total_$",
+  "data_type": "Q"
 }, {
   "key": "SPEED",
-  "field_name": "Speed (IAS) in knots",
-  "data_type": "quantitative"
+  "field_name": "Speed_IAS_in_knots",
+  "data_type": "Q"
 }, {
   "key": "Number_of_Records",
-  "field_name": "Number of Strikes",
-  "data_type": "count"
+  "field_name": "Number_of_Strikes",
+  "data_type": "Q"
 }]

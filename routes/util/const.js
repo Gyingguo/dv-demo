@@ -1,15 +1,17 @@
 var CHART_TYPE = ["BAR", "LINE", "POINT"];
 
-var AGGREGATE = ["COUNT", "MEAN", "MAX", "MIN"];
+var AGGREGATE = ["COUNT", "MEAN", "MAX", "MIN", "SUM"];
 
-var STATISTICAL_METHOD = ["ENTROPY"];
+var STATISTICAL_METHOD = ["VARIANCE"];
 
 /**
  * quantitative => Q
  * temporal => T
  * ordinal => O
  * nominal => N
- * @type {[type]}   map table
+ * @type {[type]}   map table 
+ *
+ * [default] treated first param as a measure, second param as a dimension 
  */
 var DATA_TYPE_MAP_CHART_TYPE = {
 	"Q": {
@@ -30,6 +32,31 @@ var DATA_TYPE_MAP_CHART_TYPE = {
 	"N": {
 		"N": []
 	}
-}
+};
 
-var const_variable = {};
+// temporary score strategy
+var CHART_TYPE_CHANNEL_SCORE = {
+	"Q_Q_POINT": 3,
+	"Q_T_LINE": 3,
+	"Q_O_LINE": 3,
+	"Q_N_BAR": 3,
+	"T_N_POINT": 3,
+	"O_N_POINT": 3,
+
+	"Q_T_BAR": 2,
+	"Q_O_BAR": 2,
+	"Q_N_POINT": 2,
+
+	"Q_T_POINT": 1,
+	"Q_O_POINT": 1
+};
+
+var const_variable = {
+	CHART_TYPE: CHART_TYPE,
+	AGGREGATE: AGGREGATE,
+	STATISTICAL_METHOD: STATISTICAL_METHOD,
+	DATA_TYPE_MAP_CHART_TYPE: DATA_TYPE_MAP_CHART_TYPE,
+	CHART_TYPE_CHANNEL_SCORE: CHART_TYPE_CHANNEL_SCORE
+};
+
+module.exports = const_variable;
