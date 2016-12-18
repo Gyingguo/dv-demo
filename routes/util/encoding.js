@@ -1,8 +1,4 @@
-var generatedChannel = require('channel/generatedChannel');
-var chartTypeChannel = require('channel/chartTypeChannel');
-var aggregateTypeChannel = require('channel/aggregateTypeChannel');
-var statisticalMethodChannel = require('channel/statisticalMethodChannel');
-var processDataChannel = require('channel/processRawDataChannel');
+var channel = require('channel/init');
 
 // collect attributes
 function collectAttributes(schema) {
@@ -48,20 +44,20 @@ encoding.encoding = function (schema, data, selectedElem) {
 
 	// go through generatedChannel
 	var fields = collectAttributes(schema);
-	var generatedSet = generatedChannel.generatedChannel(fields, selectedElem);
+	var generatedSet = channel.generatedChannel(fields, selectedElem);
 
 	// go through chartTypeChannel
 	var types = collectDataTypes(schema);
-	var chartTypeSet = chartTypeChannel.chartTypeChannel(generatedSet, types);
+	var chartTypeSet = channel.chartTypeChannel(generatedSet, types);
 
 	// go through aggregateTypeChannel
-	var aggregateTypeSet = aggregateTypeChannel.aggregateTypeChannel(chartTypeSet);
+	var aggregateTypeSet = channel.aggregateTypeChannel(chartTypeSet);
 
 	// go through statisticalMethodChannel
-	var statisticalMethodSet = statisticalMethodChannel.statisticalMethodChannel(aggregateTypeSet);
+	var statisticalMethodSet = channel.statisticalMethodChannel(aggregateTypeSet);
 
 	// go through dataChannel
-	var dataProcessSet = processDataChannel.processRawDataChannel(statisticalMethodSet);
+	var dataProcessSet = channel.processRawDataChannel(statisticalMethodSet);
 };
 
 module.exports = encoding;
