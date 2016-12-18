@@ -27,7 +27,13 @@ function collectDataTypes(schema) {
 	return dataTypes;
 }
 
-function calculateScores(set) {
+/**
+ * [calculateScores description]
+ * @param  {[type]} set  [description]
+ * @param  {[type]} topk [description] 返回topk的结果
+ * @return {[type]}      [description]
+ */
+function calculateScores(set, topk) {
 	var result = [];
 }
 
@@ -57,7 +63,10 @@ encoding.encoding = function (schema, data, selectedElem) {
 	var statisticalMethodSet = channel.statisticalMethodChannel(aggregateTypeSet);
 
 	// go through dataChannel
-	var dataProcessSet = channel.processRawDataChannel(statisticalMethodSet);
+	var dataProcessRawSet = channel.processRawDataChannel(statisticalMethodSet);
+	var dataProcessAggregateSet = channel.processAggregateDataChannel(dataProcessRawSet);
+
+	return dataProcessAggregateSet;
 };
 
 module.exports = encoding;

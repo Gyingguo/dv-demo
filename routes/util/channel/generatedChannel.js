@@ -1,3 +1,5 @@
+var common = require('../../common/common');
+
 var generatedChannel = {};
 
 /**
@@ -9,7 +11,7 @@ var generatedChannel = {};
 generatedChannel.generatedChannel = function (dataset, selectedAttribute) {
 	/**
 	 * result [{"measure": "name", "dimension": "year"},{"measure": "name", "dimension": "cylinder"}]
-	 * 
+	 *
 	 * @type {Array}
 	 */
 	var result = [];
@@ -17,8 +19,8 @@ generatedChannel.generatedChannel = function (dataset, selectedAttribute) {
 	if (selectedAttribute) {
 		// overide
 	} else {
-		for (var i = 0; i < dataset.length(); i++) {
-			for (var j = i + 1; j < dataset.length(); j++) {
+		for (var i = 0; i < dataset.length; i++) {
+			for (var j = i + 1; j < dataset.length; j++) {
 				var pair = {
 					'measure': '',
 					'dimension': ''
@@ -28,9 +30,13 @@ generatedChannel.generatedChannel = function (dataset, selectedAttribute) {
 				result.push(pair);
 
 				// reverse
-				pair['measure'] = dataset[j];
-				pair['dimension'] = dataset[i];
-				result.push(pair);
+				var reversePair = {
+					'measure': '',
+					'dimension': ''
+				};
+				reversePair['measure'] = dataset[j];
+				reversePair['dimension'] = dataset[i];
+				result.push(reversePair);
 			}
 		}
 	}

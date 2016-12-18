@@ -1,3 +1,5 @@
+var common = require('../../common/common');
+
 var const_variable = require('../const');
 var util = require('../util');
 
@@ -8,23 +10,23 @@ var aggregateTypeChannel = {};
 /**
  * [aggregateTypeChannel
  * @param  {[type]} dataset [description]
- * 
+ *
  * [{"measure": "name", "dimension": "year", "chartType": "Q_Q_POINT"}
- * ,{"measure": "name", "dimension": "cylinder", "chartType": "Q_T_BAR"}] 
- * 
+ * ,{"measure": "name", "dimension": "cylinder", "chartType": "Q_T_BAR"}]
+ *
  * @return {[type]}
  *
  * [{"measure": "name", "dimension": "year", "chartType": "Q_Q_POINT", "aggregateType": "SUM"}
- * ,{"measure": "name", "dimension": "cylinder", "chartType": "Q_T_BAR", "aggregateType": "COUNT"}]  
+ * ,{"measure": "name", "dimension": "cylinder", "chartType": "Q_T_BAR", "aggregateType": "COUNT"}]
  *
  * default: the first attribute as a measure, the second as a dimension, it may constomizable later. Aggregate for measure
  */
 aggregateTypeChannel.aggregateTypeChannel = function (dataset) {
 	var result = [];
 
-	for (var i = 0; i < dataset.length(); i++) {
-		for (var j = 0; j < AGGREGATE.length(); j++) {
-			var pair = dataset[i];
+	for (var i = 0; i < dataset.length; i++) {
+		for (var j = 0; j < AGGREGATE.length; j++) {
+			var pair = common.deepCopyObj(dataset[i]);
 			var agg = AGGREGATE[j];
 
 			// only quantity can be applied aggregate function
@@ -33,7 +35,7 @@ aggregateTypeChannel.aggregateTypeChannel = function (dataset) {
 			} else {
 				pair['aggregateType'] = '';
 			}
-			
+
 			result.push(pair);
 		}
 	}
@@ -46,7 +48,7 @@ aggregateTypeChannel.aggregateTypeChannel = function (dataset) {
  * @param {[type]} data [1, 2, 3, 4]
  */
 aggregateTypeChannel.count = function (data) {
-	return data.length();
+	return data.length;
 };
 
 /**

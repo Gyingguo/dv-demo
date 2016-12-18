@@ -1,6 +1,8 @@
 var dataSchema = require('../mock/schema/birdstrikes-schema.json');
 var dataDetail = require('../mock/data/birdstrikes.json');
 
+var encoding = ('util/encoding');
+
 var result = {
   "title": "demo",
   "data": {
@@ -87,7 +89,8 @@ vis.init = function (req, res, next) {
   result.data.selectedVis = handleSelectedVis();
   result.data.recommendatedVis = handleRecommendatedVis();
 
-  res.send(result);
+  // res.send(result);
+  res.send(encoding.encoding(dataSchema, dataDetail));
 };
 
 module.exports = vis;
