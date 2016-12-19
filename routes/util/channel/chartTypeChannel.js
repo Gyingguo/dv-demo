@@ -24,6 +24,7 @@ chartTypeChannel.chartTypeChannel = function (dataset, schema) {
 		var elem0 = schema[pair['measure']];
 		var elem1 = schema[pair['dimension']];
 
+		// prunning, if the elem's schema doesn't map to DATA_TYPE_MAP_CHART_TYPE, it willn't be added into result
 		if (DATA_TYPE_MAP_CHART_TYPE.hasOwnProperty(elem0)) {
 			if (DATA_TYPE_MAP_CHART_TYPE[elem0].hasOwnProperty(elem1)) {
 				var chartTypeArr = DATA_TYPE_MAP_CHART_TYPE[elem0][elem1];

@@ -52,27 +52,27 @@ encoding.encoding = function (schema, data, selectedElem) {
 	// go through generatedChannel
 	var fields = collectAttributes(schema);
 	var generatedSet = channel.generatedChannel.generatedChannel(fields, selectedElem);
-	console.log('go through generatedChannel...');
+	console.log('go through generatedChannel... ' + generatedSet.length);
 
 	// go through chartTypeChannel
 	var types = collectDataTypes(schema);
 	var chartTypeSet = channel.chartTypeChannel.chartTypeChannel(generatedSet, types);
-	console.log('go through chartTypeChannel...');
+	console.log('go through chartTypeChannel... ' + chartTypeSet.length);
 
 	// go through aggregateTypeChannel
 	var aggregateTypeSet = channel.aggregateTypeChannel.aggregateTypeChannel(chartTypeSet);
-	console.log('go through aggregateTypeChannel...');
+	console.log('go through aggregateTypeChannel... ' + aggregateTypeSet.length);
 
 	// go through statisticalMethodChannel
 	var statisticalMethodSet = channel.statisticalMethodChannel.statisticalMethodChannel(aggregateTypeSet);
-	console.log('go through statisticalMethodChannel...');
+	console.log('go through statisticalMethodChannel... ' + statisticalMethodSet.length);
 
 	// go through dataChannel
 	var dataProcessRawSet = channel.processDataChannel.processRawDataChannel(statisticalMethodSet, data);
-	console.log('go through processRawDataChannel...');
+	console.log('go through processRawDataChannel... ' + dataProcessRawSet.length);
 
 	var dataProcessAggregateSet = channel.processDataChannel.processAggregateDataChannel(dataProcessRawSet);
-	console.log('go through processAggregateDataChannel...');
+	console.log('go through processAggregateDataChannel... ' + dataProcessAggregateSet.length);
 
 	return dataProcessAggregateSet;
 };
