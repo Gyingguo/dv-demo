@@ -102,13 +102,15 @@ processDataChannel.processAggregateDataChannel = function (sets) {
 		var groupByRawData = set['groupByRawData'];
 		var aggregateType = set['aggregateType'];
 
-		for (key in groupByRawData) {
-			var item = groupByRawData[key];
-			var aggResult = util[aggregateType.toLowerCase()](item);
-			aggregateData[key] = aggResult;
+		if (aggregateType) {
+			for (key in groupByRawData) {
+				var item = groupByRawData[key];
+				var aggResult = util[aggregateType.toLowerCase()](item);
+				aggregateData[key] = aggResult;
+			}
+			set['aggregateData'] = aggregateData;
+			result.push(set);
 		}
-		set['aggregateData'] = aggregateData;
-		result.push(set);
 	}
 
 	return result;

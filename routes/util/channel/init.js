@@ -1,8 +1,8 @@
-var generatedChannel = require('channel/generatedChannel');
-var chartTypeChannel = require('channel/chartTypeChannel');
-var aggregateTypeChannel = require('channel/aggregateTypeChannel');
-var statisticalMethodChannel = require('channel/statisticalMethodChannel');
-var processDataChannel = require('channel/processRawDataChannel');
+var generatedChannel = require('../channel/generatedChannel');
+var chartTypeChannel = require('../channel/chartTypeChannel');
+var aggregateTypeChannel = require('../channel/aggregateTypeChannel');
+var statisticalMethodChannel = require('../channel/statisticalMethodChannel');
+var processDataChannel = require('../channel/processDataChannel');
 
 var channelMap = {
   'generatedChannel': generatedChannel,
