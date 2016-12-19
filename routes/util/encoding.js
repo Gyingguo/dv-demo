@@ -1,4 +1,7 @@
+var const_variable = require('./const');
+var util = require('./util');
 var channel = require('./channel/init');
+var common = require('../common/common');
 
 // collect attributes
 function collectAttributes(schema) {
@@ -30,11 +33,101 @@ function collectDataTypes(schema) {
 /**
  * [calculateScores description]
  * @param  {[type]} set  [description]
- * @param  {[type]} topk [description] 返回topk的结果
+ * [{"measure": "name",
+ *   "dimension": "year",
+ *   "chartType": "Q_Q_POINT",
+ *   "aggregateType": "SUM",
+ *   "statisticalMethod": "variance",
+ *   "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]},
+ *   "aggregateData": {"1992": 6, "1993": 6, "1994": 6}
+ *   }
+ * ,{"measure": "name",
+ *   "dimension": "cylinder",
+ *   "chartType": "Q_T_BAR",
+ *   "aggregateType": "COUNT",
+ *   "statisticalMethod": "variance",
+ *   "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]}
+ *   "aggregateData": {"1992": 3, "1993": 3, "1994": 3}
+ * }]
+ * 
+ * @param  {[type]} topk [description] 返回topk的结果, default 10
  * @return {[type]}      [description]
+ *
+ * [{
+ * 	"score": 1,    // 整个按照score进行排序
+ * 	"set": {
+ * 	 	"measure": "name",
+ *    	"dimension": "year",
+ *     	"chartType": "Q_Q_POINT",
+ *      "aggregateType": "SUM",
+ *      "statisticalMethod": "variance",
+ *      "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]},
+ *      "aggregateData": {"1992": 6, "1993": 6, "1994": 6}    
+ *   }
+ * },
+ * {
+ *  "score": 2,
+ *  "set": {
+ *  	"measure": "name",
+ *    	"dimension": "year",
+ *     	"chartType": "Q_Q_POINT",
+ *      "aggregateType": "SUM",
+ *      "statisticalMethod": "variance",
+ *      "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]},
+ *      "aggregateData": {"1992": 6, "1993": 6, "1994": 6}    
+ *  }
+ * }]
  */
-function calculateScores(set, topk) {
+function calculateScores(sets, topk) {
 	var result = [];
+	var min = -1;
+
+	for (var i = 0; i < sets.length; i++) {
+		var set = sets[i];
+		var item = {
+			'score': 0,
+			'set': null
+		};
+
+		// calculate chartType score
+		var chartTypeScore = const_variable.CHART_TYPE_CHANNEL_SCORE[set['chartType']];
+		// calculate statisticalMethod score
+		var statisticalData = common.getValuesFromObj(set['aggregateData']);
+
+		var statisticalMethodScore = util.variance(statisticalData);
+
+		item.score = chartTypeScore + statisticalMethodScore;
+		item.set = set;
+		// make sure result has topK score sets
+		if (i < topk) {
+			result.push(item);
+			// update min value
+			min = item.score < min ? item.score : min;
+		} else {
+			if (item.score > min) {
+				// pop the item whose score is min, then push the new item
+				// find the minist item pos
+				var pos = 0;
+				for (var j = 0; j < result.length; j++) {
+					if (result[j].score === min) {
+						pos = j;
+						return;
+					}
+				}
+				// remove
+				result.splice(pos, 1);
+				// add item with higher score
+				result.push(item);
+				// update min value
+				min = result[0].score;
+				for (var k = 1; k < result.length; k++) {
+					min = result[k].score < min ? result[k].score : min;
+				}
+			}
+		}
+	}
+
+	return result;
 }
 
 var encoding = {};
@@ -74,7 +167,12 @@ encoding.encoding = function (schema, data, selectedElem) {
 	var dataProcessAggregateSet = channel.processDataChannel.processAggregateDataChannel(dataProcessRawSet);
 	console.log('go through processAggregateDataChannel... ' + dataProcessAggregateSet.length);
 
-	return dataProcessAggregateSet;
+	// calcute scores
+	var topkSet = calculateScores(dataProcessAggregateSet, 10);
+
+	// encoding to chart
+
+	return topkSet;
 };
 
 module.exports = encoding;
