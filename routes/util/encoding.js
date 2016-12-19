@@ -49,7 +49,7 @@ function collectDataTypes(schema) {
  *   "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]}
  *   "aggregateData": {"1992": 3, "1993": 3, "1994": 3}
  * }]
- * 
+ *
  * @param  {[type]} topk [description] 返回topk的结果, default 10
  * @return {[type]}      [description]
  *
@@ -62,7 +62,7 @@ function collectDataTypes(schema) {
  *      "aggregateType": "SUM",
  *      "statisticalMethod": "variance",
  *      "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]},
- *      "aggregateData": {"1992": 6, "1993": 6, "1994": 6}    
+ *      "aggregateData": {"1992": 6, "1993": 6, "1994": 6}
  *   }
  * },
  * {
@@ -74,7 +74,7 @@ function collectDataTypes(schema) {
  *      "aggregateType": "SUM",
  *      "statisticalMethod": "variance",
  *      "groupByRawData": {"1992": [1, 2, 3], "1993": [1, 2, 3], "1994": [1, 2, 3]},
- *      "aggregateData": {"1992": 6, "1993": 6, "1994": 6}    
+ *      "aggregateData": {"1992": 6, "1993": 6, "1994": 6}
  *  }
  * }]
  */
@@ -88,7 +88,6 @@ function calculateScores(sets, topk) {
 			'score': 0,
 			'set': null
 		};
-
 		// calculate chartType score
 		var chartTypeScore = const_variable.CHART_TYPE_CHANNEL_SCORE[set['chartType']];
 		// calculate statisticalMethod score
@@ -98,20 +97,21 @@ function calculateScores(sets, topk) {
 
 		item.score = chartTypeScore + statisticalMethodScore;
 		item.set = set;
+
 		// make sure result has topK score sets
-		if (i < topk) {
+		if (i < topk && item.score !== Infinity) {
 			result.push(item);
 			// update min value
 			min = item.score < min ? item.score : min;
 		} else {
-			if (item.score > min) {
+			if (item.score > min && item.score !== Infinity) {
 				// pop the item whose score is min, then push the new item
 				// find the minist item pos
 				var pos = 0;
 				for (var j = 0; j < result.length; j++) {
 					if (result[j].score === min) {
 						pos = j;
-						return;
+						break;
 					}
 				}
 				// remove
